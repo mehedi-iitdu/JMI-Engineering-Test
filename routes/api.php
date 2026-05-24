@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('anemometers/{anemometer}/readings', [AnemometerReadingController::class, 'index']);
     Route::get('anemometers/{anemometer}/readings/{reading}', [AnemometerReadingController::class, 'show']);
 
-    // readings (NO export route)
+    // readings — export registered BEFORE apiResource so "export" isn't
+    // captured by the {reading} wildcard (same pattern as recent-readings).
+    Route::get('readings/export', [ReadingController::class, 'export']);
     Route::apiResource('readings', ReadingController::class);
 });
